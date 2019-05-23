@@ -11,7 +11,11 @@ namespace Calculator
     {
         static void Main(string[] args)
         {
-            
+            Club club = new Club();
+            club.ClubName = "Spartak";
+            club.ClubCity = "Moscow";
+            club.Points = 36;
+
         }
     }
 }

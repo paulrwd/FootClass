@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FootClass
 {
-    class Player : Club
+    public class Player : Club
     {
         public string FName { get; set; }
         public string SName { get; set; }

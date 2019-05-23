@@ -2,7 +2,7 @@
 
 namespace FootClass
 {
-    class Club : Chemp
+    public class Club : Chemp
     {
         public string ClubName { get; set; }
         public string ClubCity { get; set; }
