@@ -41,10 +41,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Apple.cs" />
     <Compile Include="Chemp.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="Club.cs" />
+    <Compile Include="Game.cs" />
     <Compile Include="Player.cs" />
+    <Compile Include="Product.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
