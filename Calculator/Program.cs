@@ -31,10 +31,15 @@ namespace Calculator
             //Console.WriteLine(Factorial(5));
             //Console.ReadLine();
 
-            var eating = new Eating<Product, List<int>>();
+            
 
-            var list = new List<int>();
+            //var list = new List<int>();
+            //var eating = new Eating<Banana,int>();
+            //var ban = new Banana("Banan", 100, 100);
+            //eating.Add(ban);
+            //Console.WriteLine(eating);
 
+            var cars = new List<ICar>();
 
         }
 
