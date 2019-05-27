@@ -31,7 +31,7 @@ namespace Calculator
             //Console.WriteLine(Factorial(5));
             //Console.ReadLine();
 
-            var 
+            var eating = new Eating<Product, List<int>>();
 
             var list = new List<int>();
 
