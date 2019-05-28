@@ -44,7 +44,6 @@
     <Compile Include="Chemp.cs" />
     <Compile Include="Club.cs" />
     <Compile Include="Game.cs" />
-    <Compile Include="Person.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
