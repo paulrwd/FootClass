@@ -12,35 +12,70 @@ namespace Server
 	{
 		static void Main(string[] args)
 		{
+			#region TCP
+
+
+
+
+			//const string ip = "127.0.0.1";
+			//const int port = 8080;
+
+			//var tcpEndPoint = new IPEndPoint(IPAddress.Parse(ip), port);
+
+			//var tcpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+			//tcpSocket.Bind(tcpEndPoint);
+			//tcpSocket.Listen(5);
+
+			//while(true)
+			//{
+			//	var listener = tcpSocket.Accept();
+			//	var buffer = new byte[256];
+			//	var size = 0;
+			//	var data = new StringBuilder();
+
+			//	do
+			//	{
+			//		size = listener.Receive(buffer);
+			//		data.Append(Encoding.UTF8.GetString(buffer, 0, size));
+
+			//	} while (listener.Available > 0);
+
+			//	Console.WriteLine(data);
+
+			//	listener.Send(Encoding.UTF8.GetBytes("Успех"));
+			//	listener.Shutdown(SocketShutdown.Both);
+			//	listener.Close();
+			//}
+			#endregion
+
+
 			const string ip = "127.0.0.1";
-			const int port = 8080;
+			const int port = 8081;
 
-			var tcpEndPoint = new IPEndPoint(IPAddress.Parse(ip), port);
+			var udpEndPoint = new IPEndPoint(IPAddress.Parse(ip), port);
 
-			var tcpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-			tcpSocket.Bind(tcpEndPoint);
-			tcpSocket.Listen(5);
+			var udpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+			udpSocket.Bind(udpEndPoint);
 
-			while(true)
+			while (true)
 			{
-				var listener = tcpSocket.Accept();
 				var buffer = new byte[256];
 				var size = 0;
 				var data = new StringBuilder();
+				EndPoint senderEndPoint = new IPEndPoint(IPAddress.Any, 0);
 
 				do
 				{
-					size = listener.Receive(buffer);
-					data.Append(Encoding.UTF8.GetString(buffer, 0, size));
 
-				} while (listener.Available > 0);
+					size = udpSocket.ReceiveFrom(buffer, ref senderEndPoint);
+					data.Append(Encoding.UTF8.GetString(buffer));
+				} while (udpSocket.Available > 0);
 
+				udpSocket.SendTo(Encoding.UTF8.GetBytes("Сообщение получено"), senderEndPoint);
 				Console.WriteLine(data);
-
-				listener.Send(Encoding.UTF8.GetBytes("Успех"));
-				listener.Shutdown(SocketShutdown.Both);
-				listener.Close();
 			}
+
+
 		}
 	}
 }
