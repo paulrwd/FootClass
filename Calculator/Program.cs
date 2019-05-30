@@ -25,45 +25,102 @@ namespace Calculator
 		static void Main(string[] args)
 
 		{
-			using (var context = new MyDBContext())
+			var rnd = new Random();
+			var products = new List<Product>();
+			for (var i = 0; i < 10; i++)
 			{
-				var group = new Group()
+				var product = new Product()
 				{
-					Name = "Rammstein", Year = 1994
+					Name = "Продукт" + i,
+					Energy = rnd.Next(8, 14)
 				};
-				var group2 = new Group()
-				{
-					Name = "Linkin Park"
-				};
-
-				
-				context.Groups.Add(group);
-				context.Groups.Add(group2);
-
-				context.SaveChanges();
-
-				var songs = new List<Song>
-				{
-					new Song() {Name = "In the End", GroupId = group2.Id},
-					new Song() {Name = "Numb", GroupId = group2.Id},
-					new Song() {Name = "Mutter", GroupId = group.Id}
-				};
-
-				context.Songs.AddRange(songs);
-				context.SaveChanges();
-
-				var s = context.Groups.Single(x => x.Id == group.Id);
-				s.Name = "Rammshtein";
-				context.SaveChanges();
-
-				foreach (var song in songs)
-				{
-					Console.WriteLine($"Song name: {song.Name}, Group name: {song.Group.Name}");
-				}
-				Console.WriteLine($"id: {group.Id}, name: {group.Name}, year: {group.Year}");
-				Console.WriteLine($"id: {group2.Id}, name: {group2.Name}, year: {group2.Year}");
+				products.Add(product);
 			}
-				Console.ReadLine();
+
+			var result = from item in products
+						 where item.Energy < 200
+						 orderby item.Energy
+						 select item;
+
+			var result2 = products.Where(item => item.Energy < 100 || item.Energy > 450);
+
+			foreach (var item in result)
+			{
+				Console.WriteLine(item);
+			}
+
+			foreach (var item in result2)
+			{
+				Console.WriteLine(item);
+			}
+
+			var selectCollection = products.Select(product => product.Energy);
+			foreach (var item in selectCollection)
+			{
+				Console.WriteLine(item);
+			}
+
+			var orderbyCollection = products.OrderBy(product => product.Energy).ThenByDescending(product => product.Name);
+			foreach (var item in orderbyCollection)
+			{
+				Console.WriteLine(item);
+			}
+
+			var groupbyCollection = products.GroupBy(product => product.Energy);
+			foreach (var group in groupbyCollection)
+			{
+				Console.WriteLine($"Key: {group.Key}");
+				foreach (var item in group)
+				{
+					Console.WriteLine(item);
+				}
+			}
+
+			products.Reverse();
+
+			foreach (var item in products)
+			{
+				Console.WriteLine(item);
+			}
+
+			Console.WriteLine(products.All(item => item.Energy == 10));
+			Console.WriteLine(products.Any(item => item.Energy == 10));
+			Console.WriteLine(products.Contains(products[5]));
+
+			var array1 = new int[]{1, 2, 3, 4};
+			var array2
+				= new int[] { 3, 4, 5, 6 };
+			foreach (var item in array1)
+			{
+				Console.WriteLine(item);
+			}
+			Console.WriteLine("_________");
+			var union = array1.Union(array2);
+			foreach (var item in union)
+			{
+				Console.WriteLine(item);
+			}
+
+			Console.WriteLine("_________");
+			var intersect = array1.Intersect(array2);
+			foreach (var item in intersect)
+			{
+				Console.WriteLine(item);
+			}
+
+			Console.WriteLine("_________");
+			Console.WriteLine(array1.Sum());
+			Console.WriteLine("_________");
+			Console.WriteLine(products.Min(p => p.Energy));
+			Console.WriteLine("_________");
+			Console.WriteLine(products.Max(p => p.Energy));
+			Console.WriteLine("_________");
+			Console.WriteLine(array1.FirstOrDefault());
+			Console.WriteLine("_________");
+			Console.WriteLine(array2.LastOrDefault());
+
+
+			Console.ReadLine();
 
 		}
 	

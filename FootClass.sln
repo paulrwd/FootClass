@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FootClass", "FootClass\Foot
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calculator", "Calculator\Calculator.csproj", "{8A5261C6-6972-4580-9AF5-AB13665B1EFE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Server\Server.csproj", "{56E038A8-1C55-493C-B0A1-47FB496385C9}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{8A5261C6-6972-4580-9AF5-AB13665B1EFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8A5261C6-6972-4580-9AF5-AB13665B1EFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8A5261C6-6972-4580-9AF5-AB13665B1EFE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{56E038A8-1C55-493C-B0A1-47FB496385C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{56E038A8-1C55-493C-B0A1-47FB496385C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{56E038A8-1C55-493C-B0A1-47FB496385C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{56E038A8-1C55-493C-B0A1-47FB496385C9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

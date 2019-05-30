@@ -50,16 +50,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Group.cs" />
-    <Compile Include="Migrations\201905291412380_AddGroupType.cs" />
-    <Compile Include="Migrations\201905291412380_AddGroupType.Designer.cs">
-      <DependentUpon>201905291412380_AddGroupType.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="MyDBContext.cs" />
+    <Compile Include="Product.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Song.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -70,11 +63,6 @@
       <Project>{7aadfbe2-cdaa-4fa4-bacc-218d89dad4b4}</Project>
       <Name>FootClass</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201905291412380_AddGroupType.resx">
-      <DependentUpon>201905291412380_AddGroupType.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
