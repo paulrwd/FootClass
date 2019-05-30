@@ -14,88 +14,59 @@ using FootClass;
 
 namespace Calculator
 {
-	
 
-	
+
+
 
 	class Program
 	{
 
 
 		static void Main(string[] args)
+
 		{
-			#region TCP
-
-
-
-
-			//const string ip = "127.0.0.1";
-			//const int port = 8080;
-			//var tcpEndPoint = new IPEndPoint(IPAddress.Parse(ip), port);
-
-			//var tcpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-
-			//Console.WriteLine("Введите сообщение");
-			//var message = Console.ReadLine();
-
-			//var data = Encoding.UTF8.GetBytes(message);
-			//tcpSocket.Connect(tcpEndPoint);
-			//tcpSocket.Send(data);
-
-			//var buffer = new byte[256];
-			//var size = 0;
-			//var answer = new StringBuilder();
-
-			//do
-			//{
-			//	size = tcpSocket.Receive(buffer);
-			//	answer.Append(Encoding.UTF8.GetString(buffer, 0, size));
-
-			//} while (tcpSocket.Available > 0);
-
-			//Console.WriteLine(answer.ToString());
-
-			//tcpSocket.Shutdown(SocketShutdown.Both);
-			//tcpSocket.Close();
-			//Console.ReadLine();
-
-			#endregion
-
-
-			const string ip = "127.0.0.1";
-			const int port = 8082;
-
-			var udpEndPoint = new IPEndPoint(IPAddress.Parse(ip), port);
-
-			var udpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-			udpSocket.Bind(udpEndPoint);
-
-			while (true)
+			using (var context = new MyDBContext())
 			{
-				Console.WriteLine("Введите сообщение: ");
-				var message = Console.ReadLine();
-
-				var serverEndPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8081);
-				udpSocket.SendTo(Encoding.UTF8.GetBytes(message), serverEndPoint);
-
-				var buffer = new byte[256];
-				var size = 0;
-				var data = new StringBuilder();
-				EndPoint senderEndPoint = new IPEndPoint(IPAddress.Any, 0);
-
-				do
+				var group = new Group()
 				{
+					Name = "Rammstein", Year = 1994
+				};
+				var group2 = new Group()
+				{
+					Name = "Linkin Park"
+				};
 
-					size = udpSocket.ReceiveFrom(buffer, ref senderEndPoint);
-					data.Append(Encoding.UTF8.GetString(buffer));
-				} while (udpSocket.Available > 0);
+				
+				context.Groups.Add(group);
+				context.Groups.Add(group2);
 
-				Console.WriteLine(data);
-				Console.ReadLine();
+				context.SaveChanges();
+
+				var songs = new List<Song>
+				{
+					new Song() {Name = "In the End", GroupId = group2.Id},
+					new Song() {Name = "Numb", GroupId = group2.Id},
+					new Song() {Name = "Mutter", GroupId = group.Id}
+				};
+
+				context.Songs.AddRange(songs);
+				context.SaveChanges();
+
+				var s = context.Groups.Single(x => x.Id == group.Id);
+				s.Name = "Rammshtein";
+				context.SaveChanges();
+
+				foreach (var song in songs)
+				{
+					Console.WriteLine($"Song name: {song.Name}, Group name: {song.Group.Name}");
+				}
+				Console.WriteLine($"id: {group.Id}, name: {group.Name}, year: {group.Year}");
+				Console.WriteLine($"id: {group2.Id}, name: {group2.Name}, year: {group2.Year}");
 			}
-
+				Console.ReadLine();
 
 		}
+	
 
 
 		public static int Factorial(int value)
