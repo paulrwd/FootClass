@@ -23,58 +23,41 @@ namespace Calculator
 
 
 		static void Main(string[] args)
-
 		{
-			Console.WriteLine("Введите число: ");
-			var input = Console.ReadLine();
-			if (int.TryParse(input, out int result))
+			var cars = new List<Car>()
 			{
-				//var isEven = IsEven(result);
-				var isEven = result.IsEven();
-				if (isEven)
-				{
-					Console.WriteLine($"{result} - Четное");
-				}
-				else
-				{
-					Console.WriteLine($"{result} - Нечетное");
-				}
+				new Car() {Name = "Ford", Number = "А001АА01"},
+				new Car() {Name = "Lada", Number = "В782ВТ77"}
+			};
+
+			var parking = new Parking();
+			foreach (var car in cars)
+			{
+				parking.Add(car);
 			}
 
-			int h = 182;
-			h.isDividedBy(7);
-			Console.WriteLine(Convert.ToInt32(input).isDividedBy(7));
+			Console.WriteLine(parking["В782ВТ77"]?.Name);
+			Console.WriteLine(parking["В782ВТ37"]?.Name);
 
-			var roads = new List<Road>();
-			for (var i = 0; i < 10; i++)
+			Console.WriteLine("Введите номер нового автомобиля");
+			var num = Console.ReadLine();
+
+			parking[1] = new Car() { Name = "BMW", Number = num };
+			parking.Add(parking[1]);
+			Console.WriteLine(parking[1]);
+
+			foreach (var car in parking)
 			{
-				var road = new Road();
-				road.CreateRandomRoad(1000, 10000);
-				roads.Add(road);
+				Console.WriteLine(car);
 			}
 
-
-			var roadsName = roads.ConvertToString();
-			Console.WriteLine(roadsName);
+			foreach (var name in parking.GetNames())
+			{
+				Console.WriteLine(name);
+			}
 
 			Console.ReadLine();
-
 		}
 
-		
-
-
-		public static int Factorial(int value)
-		{
-			if (value <= 1)
-			{
-				return 1;
-			}
-			else
-			{
-				return value * Factorial(value - 1);
-			}
-
-		}
 	}
 }
