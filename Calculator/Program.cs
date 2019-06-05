@@ -12,10 +12,15 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Net.Sockets;
 using System.Runtime.Remoting.Channels;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization.Formatters.Soap;
+using System.Runtime.Serialization.Json;
+using System.Xml.Serialization;
 using FootClass;
 
 namespace Calculator
 {
+
 
 
 
@@ -25,35 +30,101 @@ namespace Calculator
 
 		static void Main(string[] args)
 		{
-			var photo = new Photo("hello.png")
+			var groups = new List<Group>();
+			var students = new List<Student>();
+			for (int i = 1; i < 10; i++)
 			{
-				Path = @"C:\hello.png"
-			};
-
-			var type = typeof(Photo);
-			var attributes = type.GetCustomAttributes(false);
-			foreach (var attribute in attributes)
-			{
-				Console.WriteLine(attribute);
+				groups.Add(new Group(i, "Группа " + i));
 			}
 
-			var properties = type.GetProperties();
-			foreach (var prop in properties)
+			for (int i = 0; i < 300; i++)
 			{
-				var attrs = prop.GetCustomAttributes(false);
-
-				if (attrs.Any(a => a.GetType() == typeof(GeoAttribute)))
+				var student = new Student(Guid.NewGuid().ToString().Substring(0, 5), (i % 30) + 15)
 				{
-					Console.WriteLine(prop.PropertyType + " " + prop.Name + " " + prop.Attributes);
+					Group = groups[i % 9]
+				};
+				students.Add(student);
+			}
+
+			var binFormatter = new BinaryFormatter();
+
+			using (var file = new FileStream("groups.bin", FileMode.OpenOrCreate))
+			{
+				binFormatter.Serialize(file, groups);
+			}
+
+			using (var file = new FileStream("groups.bin", FileMode.OpenOrCreate))
+			{
+				var newGroups = binFormatter.Deserialize(file) as List<Group>;
+
+				if (newGroups != null)
+				{
+					foreach (var group in newGroups)
+					{
+						Console.WriteLine(group);
+					}
 				}
-
-				
-				
-				
-
 			}
 
 			Console.ReadLine();
+
+			var soap = new SoapFormatter();
+			using (var file = new FileStream("groups.soap", FileMode.OpenOrCreate))
+			{
+				soap.Serialize(file, groups.ToArray());
+			}
+
+			using (var file = new FileStream("groups.soap", FileMode.OpenOrCreate))
+			{
+				var newGroups = soap.Deserialize(file) as Group[];
+
+				if (newGroups != null)
+				{
+					foreach (var group in newGroups)
+					{
+						Console.WriteLine(group);
+					}
+				}
+			}
+
+			var xmlFormatter = new XmlSerializer(typeof(List<Group>));
+			using (var file = new FileStream("groups.xml", FileMode.OpenOrCreate))
+			{
+				xmlFormatter.Serialize(file, groups);
+			}
+
+			using (var file = new FileStream("groups.xml", FileMode.OpenOrCreate))
+			{
+				var newGroups = xmlFormatter.Deserialize(file) as List<Group>;
+
+				if (newGroups != null)
+				{
+					foreach (var group in newGroups)
+					{
+						Console.WriteLine(group);
+					}
+				}
+			}
+
+			var jsonFormatter = new DataContractJsonSerializer(typeof(List<Student>));
+			using (var file = new FileStream("students.json", FileMode.OpenOrCreate))
+			{
+				jsonFormatter.WriteObject(file, students);
+			}
+
+			using (var file = new FileStream("students.json", FileMode.OpenOrCreate))
+			{
+				var newStudents = jsonFormatter.ReadObject(file) as List<Student>;
+
+				if (newStudents != null)
+				{
+					foreach (var group in newStudents)
+					{
+						Console.WriteLine(students);
+					}
+				}
+			}
+
 		}
 	}
 }
